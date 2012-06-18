@@ -534,7 +534,7 @@ void initRendering() {
     //glEnable(GL_BLEND); //Enable alpha blending
     //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set the blend function
 
-    Image* image = loadBMP("grass1.bmp");
+    Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
     delete image;
 }
@@ -662,14 +662,14 @@ int main(int argc, char** argv) {
 
     glutCreateWindow("Taman Bermain");
     initRendering();
-    _terrainBeruang = loadTerrain("untitled2.bmp", 1.0);
-    _terrainAir = loadTerrain("untitled1.bmp", 0.1);
+    _terrainBeruang = loadTerrain("images\\beruang.bmp", 1.0);
+    _terrainAir = loadTerrain("images\\kolam.bmp", 0.1);
     _terrainJalan = loadTerrain("images\\jalan.bmp", 1.0);
 
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
-    glutTimerFunc(25, update, 0);
+    //glutTimerFunc(25, update, 0);
 
     glutMainLoop();
     return 0;
