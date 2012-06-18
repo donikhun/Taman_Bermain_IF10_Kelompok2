@@ -12,7 +12,11 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>C:/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/imageloader.cpp</itemPath>
+      <itemPath>C:/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/imageloader.h</itemPath>
       <itemPath>main.cpp</itemPath>
+      <itemPath>C:/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/vec3f.cpp</itemPath>
+      <itemPath>C:/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/vec3f.h</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"

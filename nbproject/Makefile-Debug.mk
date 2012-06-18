@@ -34,6 +34,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/282466788/vec3f.o \
+	${OBJECTDIR}/_ext/282466788/imageloader.o \
 	${OBJECTDIR}/main.o
 
 
@@ -60,6 +62,16 @@ LDLIBSOPTIONS=-lglu32 -lglut32 -lopengl32
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/taman_bermain_if10_kelompok2.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/taman_bermain_if10_kelompok2 ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/_ext/282466788/vec3f.o: /C/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/vec3f.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/282466788
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/282466788/vec3f.o /C/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/vec3f.cpp
+
+${OBJECTDIR}/_ext/282466788/imageloader.o: /C/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/imageloader.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/282466788
+	${RM} $@.d
+	$(COMPILE.cc) -g -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/282466788/imageloader.o /C/Documents/NetBeansProjects/OpenGL/Taman_Bermain_IF10_Kelompok2/imageloader.cpp
 
 ${OBJECTDIR}/main.o: main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
