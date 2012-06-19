@@ -741,9 +741,9 @@ void initRendering() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    glEnable(GL_LIGHT1);
+    //glEnable(GL_LIGHT1);
     glEnable(GL_LIGHT2);
-    glEnable(GL_LIGHT3);
+    //glEnable(GL_LIGHT3);
     glEnable(GL_LIGHT4);
     glEnable(GL_LIGHT5);
     glEnable(GL_NORMALIZE);
@@ -765,7 +765,7 @@ void handleResize(int w, int h) {
 }
 
 void drawScene() {
-    glClearColor(1.0, 1.0, 1.0, 1);
+    glClearColor(0.0, 0.6, 0.8, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glMatrixMode(GL_MODELVIEW);
@@ -779,12 +779,12 @@ void drawScene() {
     GLfloat lightPos[] = {0, 0, 200, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    
+    /*
     GLfloat lightColor1[] = {0.7f, 0.7f, 0.7f, 1.0f};
     GLfloat lightPos1[] = {0, 0, -200, 1.0f};
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-
+    */
     GLfloat lightColor2[] = {0.7f, 0.7f, 0.7f, 1.0f};
     GLfloat lightPos2[] = {0, 200, 0, 1.0f};
     glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
@@ -841,7 +841,8 @@ void drawScene() {
     glPushMatrix();
     glScalef(0.5,0.5,0.5);
     glRotatef(90, 1, 0, 0);
-    glTranslatef(0.0,1.5,10.0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(0.0,1.5,8.0);
     bouncyCastle();
     glPopMatrix();
 
@@ -892,7 +893,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
-    glutTimerFunc(25, update, 0);
+    //glutTimerFunc(25, update, 0);
 
     glutMainLoop();
     return 0;
