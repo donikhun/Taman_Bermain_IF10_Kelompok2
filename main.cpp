@@ -13,7 +13,10 @@
 
 using namespace std;
 
-static float _angle = 0.0;
+static float _angle = 250.0;//250
+static int viewx = 0;
+static int viewy = 0;
+static int viewz = 0;
 //terrain
 //Represents a terrain, by storing a set of heights and normals at 2D locations
 
@@ -699,11 +702,13 @@ GLuint _textureId; //The OpenGL id of the texture
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
+Terrain* _terrainGunung;
 
 void cleanup() {
     delete _terrainBeruang;
     delete _terrainAir;
     delete _terrainJalan;
+    delete _terrainGunung;
 }
 void putarkanan() {
     _angle+=30;
@@ -711,10 +716,21 @@ void putarkanan() {
 }
 void handleKeypress(unsigned char key, int x, int y) {
 
-    if (key == 'c' || key == 'C') {
+    if (key == 'q') {
+		viewz++;
+	}
+	if (key == 'e') {
+		viewz-=10;
+	}
+	if (key == 's') {
+		viewy--;
+	}
+	if (key == 'w') {
+		viewy++;
+	}
+if (key == 'c' || key == 'C') {
         putarkanan();
     }
-
     if (key == 27) {
         exit(0);
     }
@@ -737,13 +753,14 @@ GLuint loadTexture(Image* image) {
     return textureId;
 }
 
+
 void initRendering() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
     //glEnable(GL_LIGHT1);
     glEnable(GL_LIGHT2);
-    //glEnable(GL_LIGHT3);
+    glEnable(GL_LIGHT3);
     glEnable(GL_LIGHT4);
     glEnable(GL_LIGHT5);
     glEnable(GL_NORMALIZE);
@@ -754,7 +771,7 @@ void initRendering() {
 
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
-    delete image;
+   
 }
 
 void handleResize(int w, int h) {
@@ -767,10 +784,11 @@ void handleResize(int w, int h) {
 void drawScene() {
     glClearColor(0.0, 0.6, 0.8, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    glTranslatef(0.0f, 0.0f, -100.0f);
+    gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
+    glTranslatef(0.0f, 0.0f, -40.0f);
 
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
@@ -779,12 +797,12 @@ void drawScene() {
     GLfloat lightPos[] = {0, 0, 200, 1.0f};
     glLightfv(GL_LIGHT0, GL_DIFFUSE, lightColor);
     glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
-    /*
+    
     GLfloat lightColor1[] = {0.7f, 0.7f, 0.7f, 1.0f};
     GLfloat lightPos1[] = {0, 0, -200, 1.0f};
     glLightfv(GL_LIGHT1, GL_DIFFUSE, lightColor1);
     glLightfv(GL_LIGHT1, GL_POSITION, lightPos1);
-    */
+    
     GLfloat lightColor2[] = {0.7f, 0.7f, 0.7f, 1.0f};
     GLfloat lightPos2[] = {0, 200, 0, 1.0f};
     glLightfv(GL_LIGHT2, GL_DIFFUSE, lightColor2);
@@ -805,9 +823,10 @@ void drawScene() {
     glLightfv(GL_LIGHT5, GL_DIFFUSE, lightColor5);
     glLightfv(GL_LIGHT5, GL_POSITION, lightPos5);
     
-    glRotatef(-40, 1.0f, 0.0f, 0.0f);
+    
+    glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
-
+    glScalef(0.5,0.5,0.5);
 
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, _textureId);
@@ -827,6 +846,18 @@ void drawScene() {
     glVertex3f(-40.0, 40.0, 0.0);
 
     glEnd();
+    
+    glBindTexture(GL_TEXTURE_2D, _textureId);
+    glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glEnable(GL_TEXTURE_GEN_T);
+    glPushMatrix();
+    glTranslatef(0,0,-16);
+    glRotatef(90, 1, 0, 0);
+    glScalef(3.8,1,3.8);
+    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);
+    glPopMatrix();
+    glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glDisable(GL_TEXTURE_GEN_T);
     //glutSolidCube(33);
     //glutSolidDodecahedron();
     glDisable(GL_TEXTURE_2D);
@@ -864,6 +895,15 @@ void drawScene() {
     glRotatef(90, 1, 0, 0);
     terrain(_terrainJalan, 0.247f, 0.247f, 0.247f);
     glPopMatrix();
+    
+    /*
+    glPushMatrix();
+    glTranslatef(0,0,-16);
+    glRotatef(90, 1, 0, 0);
+    glScalef(3.8,1,3.8);
+    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);
+    glPopMatrix();
+    */
     //*/
     glutSwapBuffers();
 }
@@ -889,7 +929,7 @@ int main(int argc, char** argv) {
     _terrainBeruang = loadTerrain("images\\beruang.bmp", 1.0);
     _terrainAir = loadTerrain("images\\kolam.bmp", 0.1);
     _terrainJalan = loadTerrain("images\\jalan.bmp", 1.0);
-
+    _terrainGunung = loadTerrain("images\\gunung.bmp", 210.0);
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
