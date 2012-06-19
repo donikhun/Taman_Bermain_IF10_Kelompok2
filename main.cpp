@@ -699,6 +699,7 @@ void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
 
  //The rotation of the box
 GLuint _textureId; //The OpenGL id of the texture
+GLuint _textureId1;
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
@@ -771,6 +772,8 @@ void initRendering() {
 
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
+    Image* image1 = loadBMP("images\\awan.bmp");
+    _textureId1 = loadTexture(image1);
    
 }
 
@@ -824,6 +827,30 @@ void drawScene() {
     glLightfv(GL_LIGHT5, GL_POSITION, lightPos5);
     
     
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, _textureId1);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glColor3f(1.0f, 1.0f, 1.0f);
+    
+    glPushMatrix();
+    glRotatef(90,0,0,1);
+    //glRotatef(90,0,1,0);
+    glBegin(GL_POLYGON);
+    
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(-80.0, -80.0, -50.0);
+    glTexCoord2f(4.0f, 0.0f);
+    glVertex3f(80.0, -80.0, -50.0);
+    glTexCoord2f(4.0f, 4.0f);
+    glVertex3f(80.0, 80.0,-50.0);
+    glTexCoord2f(0.0f, 4.0f);
+    glVertex3f(-80.0, 80.0, -50.0);
+
+    glEnd();
+    glPopMatrix();
+    glDisable(GL_TEXTURE_2D);
+    
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     glScalef(0.5,0.5,0.5);
@@ -847,14 +874,19 @@ void drawScene() {
 
     glEnd();
     
+    
+    
+    glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, _textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
     glEnable(GL_TEXTURE_GEN_T);
     glPushMatrix();
     glTranslatef(0,0,-16);
     glRotatef(90, 1, 0, 0);
     glScalef(3.8,1,3.8);
-    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);
+    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);//0.3f, 0.5f, 0.2f
     glPopMatrix();
     glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
     glDisable(GL_TEXTURE_GEN_T);
