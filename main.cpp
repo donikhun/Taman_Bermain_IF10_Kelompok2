@@ -965,7 +965,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
-    //glutTimerFunc(25, update, 0);
+    glutTimerFunc(25, update, 0);
 
     glutMainLoop();
     return 0;
