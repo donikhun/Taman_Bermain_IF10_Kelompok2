@@ -700,6 +700,9 @@ void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
  //The rotation of the box
 GLuint _textureId; //The OpenGL id of the texture
 GLuint _textureId1;
+GLuint _displayListGazibu;
+GLuint _displayListBouncy;
+GLuint _displayListRumput;
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
@@ -715,20 +718,9 @@ void putarkanan() {
     _angle+=30;
     glutPostRedisplay();
 }
-void handleKeypress(unsigned char key, int x, int y) {
+static void handleKeypress(unsigned char key, int x, int y) {
 
-    if (key == 'q') {
-		viewz++;
-	}
-	if (key == 'e') {
-		viewz-=10;
-	}
-	if (key == 's') {
-		viewy--;
-	}
-	if (key == 'w') {
-		viewy++;
-	}
+
 if (key == 'c' || key == 'C') {
         putarkanan();
     }
@@ -736,7 +728,33 @@ if (key == 'c' || key == 'C') {
         exit(0);
     }
 }
+static void kibor(int key, int x, int y) {
+	switch (key) {
+	case GLUT_KEY_HOME:
+		viewy++;
+		break;
+	case GLUT_KEY_END:
+		viewy--;
+		break;
+	case GLUT_KEY_UP:
+		viewz--;
+		break;
+	case GLUT_KEY_DOWN:
+		viewz++;
+		break;
 
+	case GLUT_KEY_RIGHT:
+		viewx++;
+		break;
+	case GLUT_KEY_LEFT:
+		viewx--;
+		break;
+
+	
+	default:
+		break;
+	}
+}
 //Makes the image into a texture, and returns the id of the texture
 
 GLuint loadTexture(Image* image) {
@@ -754,45 +772,63 @@ GLuint loadTexture(Image* image) {
     return textureId;
 }
 
+void rumput(GLuint textureId){
+    glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glColor3f(1.0f, 1.0f, 1.0f);
+
+    glBegin(GL_POLYGON);
+
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex3f(-40.0, -40.0, 0.0);
+    glTexCoord2f(4.0f, 0.0f);
+    glVertex3f(40.0, -40.0, 0.0);
+    glTexCoord2f(4.0f, 4.0f);
+    glVertex3f(40.0, 40.0, 0.0);
+    glTexCoord2f(0.0f, 4.0f);
+    glVertex3f(-40.0, 40.0, 0.0);
+
+    glEnd();
+    
+    
+}
 
 void initRendering() {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_LIGHTING);
     glEnable(GL_LIGHT0);
-    //glEnable(GL_LIGHT1);
+    glEnable(GL_LIGHT1);
     glEnable(GL_LIGHT2);
-    glEnable(GL_LIGHT3);
-    glEnable(GL_LIGHT4);
-    glEnable(GL_LIGHT5);
+    //glEnable(GL_LIGHT3);
+    //glEnable(GL_LIGHT4);
+    //glEnable(GL_LIGHT5);
     glEnable(GL_NORMALIZE);
     glEnable(GL_COLOR_MATERIAL);
     glShadeModel(GL_SMOOTH);
-    //glEnable(GL_BLEND); //Enable alpha blending
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set the blend function
-
+    
+    
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
-    Image* image1 = loadBMP("images\\awan.bmp");
+    Image* image1 = loadBMP("images\\awan1.bmp");
     _textureId1 = loadTexture(image1);
-   
-}
-
-void handleResize(int w, int h) {
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, (float) w / (float) h, 1.0, 200.0);
-}
-
-void drawScene() {
-    glClearColor(0.0, 0.6, 0.8, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
-    glMatrixMode(GL_MODELVIEW);
-    glLoadIdentity();
-    gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
-    glTranslatef(0.0f, 0.0f, -40.0f);
-
+    
+    _displayListGazibu = glGenLists(1);
+    glNewList(_displayListGazibu, GL_COMPILE);
+    gazibu();
+    glEndList();
+    
+    _displayListBouncy= glGenLists(1);
+    glNewList(_displayListBouncy, GL_COMPILE);
+    bouncyCastle();
+    glEndList();
+    
+    _displayListRumput= glGenLists(1);
+    glNewList(_displayListRumput, GL_COMPILE);
+    rumput(_textureId);
+    glEndList();
+    
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
@@ -825,58 +861,42 @@ void drawScene() {
     GLfloat lightPos5[] = {200, 0, 0, 1.0f};
     glLightfv(GL_LIGHT5, GL_DIFFUSE, lightColor5);
     glLightfv(GL_LIGHT5, GL_POSITION, lightPos5);
-    
-    
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, _textureId1);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glColor3f(1.0f, 1.0f, 1.0f);
-    
-    glPushMatrix();
-    glRotatef(90,0,0,1);
-    //glRotatef(90,0,1,0);
-    glBegin(GL_POLYGON);
-    
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(-80.0, -80.0, -50.0);
-    glTexCoord2f(4.0f, 0.0f);
-    glVertex3f(80.0, -80.0, -50.0);
-    glTexCoord2f(4.0f, 4.0f);
-    glVertex3f(80.0, 80.0,-50.0);
-    glTexCoord2f(0.0f, 4.0f);
-    glVertex3f(-80.0, 80.0, -50.0);
+    //glEnable(GL_BLEND); //Enable alpha blending
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); //Set the blend function
 
-    glEnd();
-    glPopMatrix();
-    glDisable(GL_TEXTURE_2D);
+    
+   
+}
+
+void handleResize(int w, int h) {
+    glViewport(0, 0, w, h);
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+    gluPerspective(45.0, (float) w / (float) h, 1.0, 200.0);
+}
+
+void drawScene() {
+    glClearColor(0.0, 0.6, 0.8, 1);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+    gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
+    glTranslatef(0.0f, 0.0f, -40.0f);
+
+    
+    
+    
+    
     
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
-    glScalef(0.5,0.5,0.5);
+    glScalef(0.4,0.4,0.4);
 
     glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glColor3f(1.0f, 1.0f, 1.0f);
-
-    glBegin(GL_POLYGON);
-
-    glTexCoord2f(0.0f, 0.0f);
-    glVertex3f(-40.0, -40.0, 0.0);
-    glTexCoord2f(4.0f, 0.0f);
-    glVertex3f(40.0, -40.0, 0.0);
-    glTexCoord2f(4.0f, 4.0f);
-    glVertex3f(40.0, 40.0, 0.0);
-    glTexCoord2f(0.0f, 4.0f);
-    glVertex3f(-40.0, 40.0, 0.0);
-
-    glEnd();
     
     
-    
-    glEnable(GL_TEXTURE_2D);
+    glCallList(_displayListRumput);
     glBindTexture(GL_TEXTURE_2D, _textureId);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
@@ -898,7 +918,7 @@ void drawScene() {
     glScalef(2,2,2);
     glRotatef(90, 1, 0, 0);
     glTranslatef(15.0,1.5,10.0);
-    gazibu();
+    glCallList(_displayListGazibu);
     glPopMatrix();
     
     glPushMatrix();
@@ -906,7 +926,7 @@ void drawScene() {
     glRotatef(90, 1, 0, 0);
     glRotatef(100, 0, 1, 0);
     glTranslatef(0.0,1.5,8.0);
-    bouncyCastle();
+    glCallList(_displayListBouncy);
     glPopMatrix();
 
     ///*
@@ -915,19 +935,11 @@ void drawScene() {
     glRotatef(90, 1, 0, 0);
     terrain(_terrainBeruang, 0.494f, 0.494f, 0.494f);
     glPopMatrix();
-
-    //terrain air
+//terrain air
     glPushMatrix();
     glRotatef(90, 1, 0, 0);
     terrain(_terrainAir, 0.5f, 0.71f, 0.757f);
     glPopMatrix();
-
-    //terrain jalan
-    glPushMatrix();
-    glRotatef(90, 1, 0, 0);
-    terrain(_terrainJalan, 0.247f, 0.247f, 0.247f);
-    glPopMatrix();
-    
     /*
     glPushMatrix();
     glTranslatef(0,0,-16);
@@ -958,15 +970,16 @@ int main(int argc, char** argv) {
 
     glutCreateWindow("Taman Bermain");
     initRendering();
-    _terrainBeruang = loadTerrain("images\\beruang.bmp", 1.0);
+    _terrainBeruang = loadTerrain("images\\beruang.bmp", 0.7);
     _terrainAir = loadTerrain("images\\kolam.bmp", 0.1);
     _terrainJalan = loadTerrain("images\\jalan.bmp", 1.0);
-    _terrainGunung = loadTerrain("images\\gunung.bmp", 210.0);
+    _terrainGunung = loadTerrain("images\\gunung.bmp", 45.0);
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
     glutTimerFunc(25, update, 0);
-
+    glutSpecialFunc(kibor);
+    glutIdleFunc(drawScene);
     glutMainLoop();
     return 0;
 }
