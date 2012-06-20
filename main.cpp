@@ -699,16 +699,12 @@ void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
 
  //The rotation of the box
 GLuint _textureId; //The OpenGL id of the texture
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 GLuint _textureId1;
 GLuint _displayListGazibu;
 GLuint _displayListBouncy;
 GLuint _displayListRumput;
-=======
->>>>>>> parent of ce1a125... awan
-=======
->>>>>>> parent of ce1a125... awan
+
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
@@ -816,14 +812,7 @@ void initRendering() {
     
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
-<<<<<<< HEAD
-<<<<<<< HEAD
-    Image* image1 = loadBMP("images\\awan1.bmp");
-    _textureId1 = loadTexture(image1);
-=======
-=======
->>>>>>> parent of ce1a125... awan
-   
+
 }
 
 void handleResize(int w, int h) {
@@ -836,8 +825,7 @@ void handleResize(int w, int h) {
 void drawScene() {
     glClearColor(0.0, 0.6, 0.8, 1);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
->>>>>>> parent of ce1a125... awan
-    
+
     
     _displayListGazibu = glGenLists(1);
     glNewList(_displayListGazibu, GL_COMPILE);
@@ -909,31 +897,14 @@ void drawScene() {
     gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
     glTranslatef(0.0f, 0.0f, -40.0f);
 
-    
-<<<<<<< HEAD
-    
-<<<<<<< HEAD
-    
-    
-    
-=======
->>>>>>> parent of ce1a125... awan
-=======
->>>>>>> parent of ce1a125... awan
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     glScalef(0.4,0.4,0.4);
 
     glEnable(GL_TEXTURE_2D);
-    
-<<<<<<< HEAD
-<<<<<<< HEAD
-    
+
     glCallList(_displayListRumput);
-=======
->>>>>>> parent of ce1a125... awan
-=======
->>>>>>> parent of ce1a125... awan
+
     glBindTexture(GL_TEXTURE_2D, _textureId);
     glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
     glEnable(GL_TEXTURE_GEN_T);
