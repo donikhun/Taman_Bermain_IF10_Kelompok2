@@ -699,12 +699,10 @@ void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
 
  //The rotation of the box
 GLuint _textureId; //The OpenGL id of the texture
-
 GLuint _textureId1;
 GLuint _displayListGazibu;
 GLuint _displayListBouncy;
 GLuint _displayListRumput;
-
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
@@ -812,20 +810,9 @@ void initRendering() {
     
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
-
-}
-
-void handleResize(int w, int h) {
-    glViewport(0, 0, w, h);
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    gluPerspective(45.0, (float) w / (float) h, 1.0, 200.0);
-}
-
-void drawScene() {
-    glClearColor(0.0, 0.6, 0.8, 1);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
+    Image* image1 = loadBMP("images\\awan1.bmp");
+    _textureId1 = loadTexture(image1);
+    
     
     _displayListGazibu = glGenLists(1);
     glNewList(_displayListGazibu, GL_COMPILE);
@@ -897,22 +884,29 @@ void drawScene() {
     gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
     glTranslatef(0.0f, 0.0f, -40.0f);
 
+    
+    
+    
+    
+    
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     glScalef(0.4,0.4,0.4);
 
     glEnable(GL_TEXTURE_2D);
-
+    
+    
     glCallList(_displayListRumput);
-
     glBindTexture(GL_TEXTURE_2D, _textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
     glEnable(GL_TEXTURE_GEN_T);
     glPushMatrix();
     glTranslatef(0,0,-16);
     glRotatef(90, 1, 0, 0);
     glScalef(3.8,1,3.8);
-    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);
+    terrain(_terrainGunung, 0.3f, 0.5f, 0.2f);//0.3f, 0.5f, 0.2f
     glPopMatrix();
     glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
     glDisable(GL_TEXTURE_GEN_T);
@@ -989,5 +983,3 @@ int main(int argc, char** argv) {
     glutMainLoop();
     return 0;
 }
-
-
