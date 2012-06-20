@@ -700,10 +700,13 @@ void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
  //The rotation of the box
 GLuint _textureId; //The OpenGL id of the texture
 <<<<<<< HEAD
+<<<<<<< HEAD
 GLuint _textureId1;
 GLuint _displayListGazibu;
 GLuint _displayListBouncy;
 GLuint _displayListRumput;
+=======
+>>>>>>> parent of ce1a125... awan
 =======
 >>>>>>> parent of ce1a125... awan
 Terrain* _terrainBeruang;
@@ -814,9 +817,12 @@ void initRendering() {
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
 <<<<<<< HEAD
+<<<<<<< HEAD
     Image* image1 = loadBMP("images\\awan1.bmp");
     _textureId1 = loadTexture(image1);
 =======
+=======
+>>>>>>> parent of ce1a125... awan
    
 }
 
@@ -904,11 +910,14 @@ void drawScene() {
     glTranslatef(0.0f, 0.0f, -40.0f);
 
     
+<<<<<<< HEAD
     
 <<<<<<< HEAD
     
     
     
+=======
+>>>>>>> parent of ce1a125... awan
 =======
 >>>>>>> parent of ce1a125... awan
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
@@ -918,8 +927,11 @@ void drawScene() {
     glEnable(GL_TEXTURE_2D);
     
 <<<<<<< HEAD
+<<<<<<< HEAD
     
     glCallList(_displayListRumput);
+=======
+>>>>>>> parent of ce1a125... awan
 =======
 >>>>>>> parent of ce1a125... awan
     glBindTexture(GL_TEXTURE_2D, _textureId);
