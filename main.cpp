@@ -650,6 +650,261 @@ void bouncyCastle(){
         glutSolidCone(0.7,1.5,10,10);
         glPopMatrix();
 }
+
+void doubleSwing(){
+     
+     GLUquadricObj *pObj;
+     pObj =gluNewQuadric();
+     gluQuadricNormals(pObj, GLU_SMOOTH); 
+     
+     //tiang kanan
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(-2,0,0);
+     glRotatef(290,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 10, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(-2,0,7);
+     glRotatef(250,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 10, 25, 25);
+     glPopMatrix();
+     
+     //tiang kiri
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(12,0,0);
+     glRotatef(290,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 10, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(12,0,7);
+     glRotatef(250,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 10, 25, 25);
+     glPopMatrix();
+     
+     //balokatas
+     glPushMatrix();
+     glColor3ub(46,79,219);
+     glTranslatef(5,9,3.5);
+     glScaled(4,0.4,0.1);
+     glutSolidCube(4);
+     glPopMatrix();
+     
+     //tali
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(10,3,3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.05, 0.05, 6, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(7,3,3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.05, 0.05, 6, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(3,3,3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.05, 0.05, 6, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(0,3,3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.05, 0.05, 6, 25, 25);
+     glPopMatrix();
+     
+     //tempat duduk
+     glPushMatrix();
+     glColor3ub(105,87,15);
+     glTranslatef(1.5,3,3.5);
+     glScaled(1.5,0.1,0.6);
+     glutSolidCube(2);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(105,87,15);
+     glTranslatef(8.5,3,3.5);
+     glScaled(1.5,0.1,0.6);
+     glutSolidCube(2);
+     glPopMatrix();
+     
+}
+
+void roundAbout(){
+     
+     GLUquadricObj *pObj;
+     pObj =gluNewQuadric();
+     gluQuadricNormals(pObj, GLU_SMOOTH); 
+     
+     
+     
+     //alas
+     glPushMatrix();
+     glColor3ub(0,0,0);
+     glTranslatef(0,-1,-1);
+     glScaled(1,0.1,1);
+     glutSolidSphere(5, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(46,79,219);
+     glTranslatef(0,0,-1);
+     glScaled(1,0.1,1);
+     glutSolidSphere(6, 25, 25);
+     glPopMatrix();
+     
+     //tiang pertama
+     
+     glTranslatef(0,0,4);
+     glRotatef(25,0.0,1.0,0.0);
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glRotatef(-90,1.0,0.0,0.0);
+     glTranslatef(0,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glTranslatef(4,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(0,5,0);
+     glRotatef(90,0.0,1.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,3.0,-3.5);
+     glRotatef(-30,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,0.8,-3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 2.3, 25, 25);
+     glPopMatrix();
+     
+     //tiang kedua
+     
+     glTranslatef(-4,0,-4);
+     glRotatef(-50,0.0,1.0,0.0);
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glRotatef(-90,1.0,0.0,0.0);
+     glTranslatef(0,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glTranslatef(4,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(0,5,0);
+     glRotatef(90,0.0,1.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,3.0,-3.5);
+     glRotatef(-30,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,0.8,-3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 2.3, 25, 25);
+     glPopMatrix();
+     
+     //tiang ketiga
+     
+     glTranslatef(8,0,-8);
+     glRotatef(150,0.0,1.0,0.0);
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glRotatef(-90,1.0,0.0,0.0);
+     glTranslatef(0,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glTranslatef(4,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(0,5,0);
+     glRotatef(90,0.0,1.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,3.0,-3.5);
+     glRotatef(-30,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,0.8,-3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 2.3, 25, 25);
+     glPopMatrix();
+     
+     //tiang keeempat
+     
+     glTranslatef(8,0,-4);
+     glRotatef(100,0.0,1.0,0.0);
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glRotatef(-90,1.0,0.0,0.0);
+     glTranslatef(0,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glTranslatef(4,0,0);
+     gluCylinder(pObj, 0.2, 0.2, 5, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(0,5,0);
+     glRotatef(90,0.0,1.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,3.0,-3.5);
+     glRotatef(-30,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 4, 25, 25);
+     glPopMatrix();
+     
+     glPushMatrix();
+     glColor3ub(215,215,215);
+     glTranslatef(2.0,0.8,-3.5);
+     glRotatef(-90,1.0,0.0,0.0);
+     gluCylinder(pObj, 0.2, 0.2, 2.3, 25, 25);
+     glPopMatrix();
+     
+}
 //Loads a terrain from a heightmap.  The heights of the terrain range from
 //-height / 2 to height / 2.
 
@@ -703,6 +958,9 @@ GLuint _textureId1;
 GLuint _displayListGazibu;
 GLuint _displayListBouncy;
 GLuint _displayListRumput;
+GLuint _displayListDoubleSwing;
+GLuint _displayListRoundAbout;
+
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
 Terrain* _terrainJalan;
@@ -829,6 +1087,16 @@ void initRendering() {
     rumput(_textureId);
     glEndList();
     
+    _displayListDoubleSwing= glGenLists(1);
+    glNewList(_displayListDoubleSwing, GL_COMPILE);
+    doubleSwing();
+    glEndList();
+    
+    _displayListRoundAbout= glGenLists(1);
+    glNewList(_displayListRoundAbout, GL_COMPILE);
+    roundAbout();
+    glEndList();
+    
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
@@ -939,6 +1207,22 @@ void drawScene() {
     glPushMatrix();
     glRotatef(90, 1, 0, 0);
     terrain(_terrainAir, 0.5f, 0.71f, 0.757f);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5,0.5,0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(180, 0, 1, 0);
+    glTranslatef(-50,1.5,0);
+    glCallList(_displayListDoubleSwing);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5,0.5,0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(-60,1.5,-10);
+    glCallList(_displayListRoundAbout);
     glPopMatrix();
     /*
     glPushMatrix();
