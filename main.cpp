@@ -905,6 +905,168 @@ void roundAbout(){
      glPopMatrix();
      
 }
+
+void monkeyLadder(){
+    //tiang kiri kanan depan
+    glPushMatrix();
+    glColor3f(1.0, 1.0, 0.0);
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+    glTranslatef(-5,0,35.0);
+    glutSolidCube(2);
+    glPopMatrix();    
+    
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+    glTranslatef(5,0,35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPopMatrix();
+
+//tiang kiri kanan belakang
+    glPushMatrix();
+    
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+    glTranslatef(-5,0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix();    
+    
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+    glTranslatef(5,0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPopMatrix();
+
+//tiang atas
+  glPushMatrix();
+glTranslatef(0.0,19.0,0.0);
+ glScalef(1.0,1.0,1.7);
+glRotatef(90,1.0,0.0,0.0);
+
+
+    glPushMatrix();
+    
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+glTranslatef(-5.0,0.0,0.0);
+    glutSolidCube(2);
+    glPopMatrix();    
+    
+    glPushMatrix();
+    glScalef(1.0,20.0,1.0);
+glTranslatef(5.0,0.0,0.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPopMatrix();
+
+    glPopMatrix();
+
+
+
+
+
+//tiang tangga depan
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-15.0,35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+
+
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-5.0,35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,5.0,35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+//tiang tangga belakang
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-15.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+
+
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-5.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,5.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    
+//tiang tangga atas depan
+    glPushMatrix();
+    glTranslatef(0.0,-16.0,16.0);
+    glRotatef(90,1.0,0.0,0.0);
+    
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-10.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+
+
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,0.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,10.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix();     
+
+    glPopMatrix();        
+//tiang tangga atas depan
+    glPushMatrix();
+    glTranslatef(0.0,-16.0,-16.0);
+    glRotatef(90,1.0,0.0,0.0);
+    
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,-10.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+
+
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,0.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix(); 
+    
+    glPushMatrix();
+    glScalef(5.0,1.0,1.0);
+    glTranslatef(0.0,10.0,-35.0);
+    glutSolidCube(2);
+    glPopMatrix();     
+
+    glPopMatrix();    
+    
+    
+   glPopMatrix();  
+}
 //Loads a terrain from a heightmap.  The heights of the terrain range from
 //-height / 2 to height / 2.
 
@@ -960,6 +1122,7 @@ GLuint _displayListBouncy;
 GLuint _displayListRumput;
 GLuint _displayListDoubleSwing;
 GLuint _displayListRoundAbout;
+GLuint _displayListMonkeyLadder;
 
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
@@ -1097,6 +1260,11 @@ void initRendering() {
     roundAbout();
     glEndList();
     
+    _displayListMonkeyLadder= glGenLists(1);
+    glNewList(_displayListMonkeyLadder, GL_COMPILE);
+    monkeyLadder();
+    glEndList();
+    
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
     glLightModelfv(GL_LIGHT_MODEL_AMBIENT, ambientLight);
 
@@ -1223,6 +1391,24 @@ void drawScene() {
     glRotatef(100, 0, 1, 0);
     glTranslatef(-60,1.5,-10);
     glCallList(_displayListRoundAbout);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5,0.5,0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(-60,1.5,10);
+    glColor3f(0,0,1);
+    glLineWidth(2);
+    glutWireSphere(10,10,10);
+    glPopMatrix();
+
+    glPushMatrix();
+    glScalef(0.1,0.1,0.1);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(80,20,-180);
+    glCallList(_displayListMonkeyLadder);
     glPopMatrix();
     /*
     glPushMatrix();
