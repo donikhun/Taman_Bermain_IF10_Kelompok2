@@ -1086,6 +1086,86 @@ Terrain* loadTerrain(const char* filename, float height) {
     t->computeNormals();
     return t;
 }
+void Seesaw(){
+     
+     //bawah
+    glPushMatrix();
+    glColor3ub(90,49,0);
+    glRotatef(20,1.0,0.0,1.0);
+    glScalef(0.2,1,0.2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3ub(90,49,0);
+    glTranslatef(-1.0,0.0,0.0);
+    glRotatef(20,1.0,0.0,-1.0);
+    glScalef(0.2,1,0.2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3ub(90,49,0);
+    glTranslatef(0.0,0.0,1.0);
+    glRotatef(20,-1.0,0.0,1.0);
+    glScalef(0.2,1,0.2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3ub(90,49,0);
+    glTranslatef(-1.0,0.0,1.0);
+    glRotatef(20,-1.0,0.0,-1.0);
+    glScalef(0.2,1,0.2);
+    glutSolidCube(2);
+    glPopMatrix();
+    
+    //atas
+    glPushMatrix();
+    glColor3ub(41,86,254);
+    glTranslatef(0.0,1.0,0.5);
+    glRotatef(15,0.0,0.0,-1.0);
+    glScalef(4.0,0.1,0.4);
+    glutSolidCube(4);
+    glPopMatrix(); 
+    
+    //pegangan
+    glPushMatrix();
+    glColor3ub(255,249,0);
+    glTranslatef(5.0,0.3,0.5);
+    glRotatef(15,0.0,0.0,-1.0);
+    glScalef(0.1,0.2,0.4);
+    glutSolidCube(4);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glColor3ub(255,249,0);
+    glTranslatef(-5.0,3.0,0.5);
+    glRotatef(15,0.0,0.0,-1.0);
+    glScalef(0.1,0.2,0.4);
+    glutSolidCube(4);
+    glPopMatrix();
+}
+
+//Loads a terrain from a heightmap.  The heights of the terrain range from
+//-height / 2 to height / 2.
+
+Terrain* loadTerrain(const char* filename, float height) {
+    Image* image = loadBMP(filename);
+    Terrain* t = new Terrain(image->width, image->height);
+    for (int y = 0; y < image->height; y++) {
+        for (int x = 0; x < image->width; x++) {
+            unsigned char color =
+                    (unsigned char) image->pixels[3 * (y * image->width + x)];
+            float h = height * ((color / 255.0f) - 0.5f);
+            t->setHeight(x, y, h);
+        }
+    }
+
+    delete image;
+    t->computeNormals();
+    return t;
+}
 
 void terrain(Terrain *terrain, GLfloat r, GLfloat g, GLfloat b) {
 
@@ -1263,6 +1343,11 @@ void initRendering() {
     _displayListMonkeyLadder= glGenLists(1);
     glNewList(_displayListMonkeyLadder, GL_COMPILE);
     monkeyLadder();
+    glEndList();
+    
+    _displayListSeesaw= glGenLists(1);
+    glNewList(_displayListSeesaw, GL_COMPILE);
+    Seesaw();
     glEndList();
     
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
