@@ -1182,6 +1182,96 @@ void kursi(void) {
     glPopMatrix();
 
 }
+
+void pohon(GLuint textureId){
+//batang
+GLUquadricObj *pObj;
+pObj =gluNewQuadric();
+gluQuadricNormals(pObj, GLU_SMOOTH);    
+
+glPushMatrix();
+glColor3ub(104,70,14);
+glRotatef(270,1,0,0);
+gluCylinder(pObj, 4, 0.7, 30, 25, 25);
+glPopMatrix();
+
+//ranting  
+
+glPushMatrix();
+glColor3ub(104,70,14);
+glTranslatef(0,27,0);
+glRotatef(330,1,0,0);
+gluCylinder(pObj, 0.6, 0.1, 15, 25, 25);
+glPopMatrix();
+
+//daun
+glPushMatrix();
+glColor3ub(18,118,13);
+glScaled(5, 5, 5);
+glTranslatef(0,7,3);
+//glutSolidDodecahedron();
+glEnable(GL_TEXTURE_2D);
+glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glEnable(GL_TEXTURE_GEN_T);
+glutSolidSphere(1.6,25,25);
+    glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glDisable(GL_TEXTURE_GEN_T);
+    glDisable(GL_TEXTURE_2D);
+glPopMatrix();
+
+glPushMatrix();
+glScalef(1.5, 1.5, 1.5);
+glTranslatef(0,25,25);   
+glRotatef(250,1,0,0);
+glPushMatrix();
+glColor3ub(104,70,14);
+glTranslatef(0,27,0);
+glRotatef(330,1,0,0);
+gluCylinder(pObj, 0.6, 0.1, 15, 25, 25);
+glPopMatrix();
+
+//daun
+glPushMatrix();
+glColor3ub(18,118,13);
+glScaled(5, 5, 5);
+glTranslatef(0,7,3);
+glEnable(GL_TEXTURE_2D);
+glBindTexture(GL_TEXTURE_2D, textureId);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glEnable(GL_TEXTURE_GEN_T);
+glutSolidSphere(1.6,25,25);
+    glDisable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
+    glDisable(GL_TEXTURE_GEN_T);
+    glDisable(GL_TEXTURE_2D);
+glPopMatrix();
+glPopMatrix();
+
+glPushMatrix();
+glScalef(1.8, 1.8, 1.8);
+glTranslatef(0,-6,21.5);   
+glRotatef(-55,1,0,0);
+glPushMatrix();
+glColor3ub(104,70,14);
+glTranslatef(0,27,0);
+glRotatef(330,1,0,0);
+gluCylinder(pObj, 0.6, 0.1, 15, 25, 25);
+glPopMatrix();
+
+//daun
+glPushMatrix();
+//glColor3ub(18,118,13);
+glColor3f(0.0,0.5,0.0);
+glScaled(5, 5, 5);
+glTranslatef(0,7,3);
+glutSolidSphere(1.6,25,25);
+glPopMatrix();
+glPopMatrix();
+}
 //Loads a terrain from a heightmap.  The heights of the terrain range from
 //-height / 2 to height / 2.
 
@@ -1239,6 +1329,7 @@ GLuint _displayListDoubleSwing;
 GLuint _displayListRoundAbout;
 GLuint _displayListMonkeyLadder;
 GLuint _displayListSeeSaw;
+GLuint _displayListPohon;
 
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
@@ -1350,7 +1441,7 @@ void initRendering() {
 
     Image* image = loadBMP("images\\rumput.bmp");
     _textureId = loadTexture(image);
-    Image* image1 = loadBMP("images\\awan1.bmp");
+    Image* image1 = loadBMP("images\\grass.bmp");
     _textureId1 = loadTexture(image1);
 
 
@@ -1387,6 +1478,11 @@ void initRendering() {
     _displayListSeeSaw = glGenLists(1);
     glNewList(_displayListSeeSaw, GL_COMPILE);
     Seesaw();
+    glEndList();
+    
+    _displayListPohon = glGenLists(1);
+    glNewList(_displayListPohon, GL_COMPILE);
+    pohon(_textureId1);
     glEndList();
 
     GLfloat ambientLight[] = {0.3f, 0.3f, 0.3f, 1.0f};
@@ -1444,11 +1540,6 @@ void drawScene() {
     gluLookAt(viewx, viewy, viewz, 0.0, 0.0, -100.0, 0.0, 1.0, 0.0);
     glTranslatef(0.0f, 0.0f, -40.0f);
 
-
-
-
-
-
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
     glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     glScalef(0.4, 0.4, 0.4);
@@ -1457,7 +1548,7 @@ void drawScene() {
 
 
     glCallList(_displayListRumput);
-    glBindTexture(GL_TEXTURE_2D, _textureId);
+    glBindTexture(GL_TEXTURE_2D, _textureId1);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
     glEnable(GL_TEXTURE_GEN_S); //enable texture coordinate generation
@@ -1581,6 +1672,30 @@ void drawScene() {
     glRotatef(100, 0, 1, 0);
     glTranslatef(-20, 0.5, -40);
     kursi();
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5, 0.5, 0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(10.0, 1.5, -17.0);
+    glCallList(_displayListPohon);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.3, 0.3, 0.3);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(100.0, 1.5, 50.0);
+    glCallList(_displayListPohon);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.2, 0.2, 0.2);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(50.0, 1.5, 80.0);
+    glCallList(_displayListPohon);
     glPopMatrix();
     /*
     glPushMatrix();
