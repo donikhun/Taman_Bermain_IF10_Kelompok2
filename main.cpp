@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <windows.h>
 
 #ifdef __APPLE__
 #include <OpenGL/OpenGL.h>
@@ -1067,25 +1068,6 @@ glTranslatef(5.0,0.0,0.0);
     
    glPopMatrix();  
 }
-//Loads a terrain from a heightmap.  The heights of the terrain range from
-//-height / 2 to height / 2.
-
-Terrain* loadTerrain(const char* filename, float height) {
-    Image* image = loadBMP(filename);
-    Terrain* t = new Terrain(image->width, image->height);
-    for (int y = 0; y < image->height; y++) {
-        for (int x = 0; x < image->width; x++) {
-            unsigned char color =
-                    (unsigned char) image->pixels[3 * (y * image->width + x)];
-            float h = height * ((color / 255.0f) - 0.5f);
-            t->setHeight(x, y, h);
-        }
-    }
-
-    delete image;
-    t->computeNormals();
-    return t;
-}
 void Seesaw(){
      
      //bawah
@@ -1146,7 +1128,55 @@ void Seesaw(){
     glutSolidCube(4);
     glPopMatrix();
 }
+void kursi(void){
+    
+// Batang Tiang Kanan
+    glPushMatrix();
+    glScaled(0.06, 0.2,0.06);
+   glTranslatef(43, 0,380.5); 
+   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1,1,1); 
+    glutSolidCube(5.0);
+    glPopMatrix(); 
+    
+    
+    // Batang Tiang Kiri
+    glPushMatrix();
+    glScaled(0.06, 0.2,0.06);
+   glTranslatef(3, 0,380.5); 
+   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1,1,1); 
+    glutSolidCube(5.0);
+    glPopMatrix(); 
+    
+    // Batang depan knan
+    glPushMatrix();
+    glScaled(0.06, 0.2,0.06);
+   glTranslatef(43, 0,390.5); 
+   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1,1,1);
+    glutSolidCube(5.0);
+    glPopMatrix(); 
+    
+    // Batang Depan Kiri
+    glPushMatrix();
+    glScaled(0.06, 0.2,0.06);
+   glTranslatef(3, 0,390.5); 
+   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+    glColor3f(1,1,1); 
+    glutSolidCube(5.0);
+    glPopMatrix();     
 
+    // atas kursi
+    glPushMatrix();
+    glScaled(0.6, 0.05,0.3);
+   glTranslatef(2.4,8,77); 
+   glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+     glColor3f(1.0000, 0.5252, 0.0157);
+    glutSolidCube(5.0);
+    glPopMatrix();  
+   
+}
 //Loads a terrain from a heightmap.  The heights of the terrain range from
 //-height / 2 to height / 2.
 
@@ -1203,6 +1233,7 @@ GLuint _displayListRumput;
 GLuint _displayListDoubleSwing;
 GLuint _displayListRoundAbout;
 GLuint _displayListMonkeyLadder;
+GLuint _displayListSeeSaw;
 
 Terrain* _terrainBeruang;
 Terrain* _terrainAir;
@@ -1345,8 +1376,8 @@ void initRendering() {
     monkeyLadder();
     glEndList();
     
-    _displayListSeesaw= glGenLists(1);
-    glNewList(_displayListSeesaw, GL_COMPILE);
+    _displayListSeeSaw= glGenLists(1);
+    glNewList(_displayListSeeSaw, GL_COMPILE);
     Seesaw();
     glEndList();
     
@@ -1495,6 +1526,39 @@ void drawScene() {
     glTranslatef(80,20,-180);
     glCallList(_displayListMonkeyLadder);
     glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5,0.5,0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(20,1.5,-60);
+    glCallList(_displayListSeeSaw);
+    glPopMatrix();
+    
+    glPushMatrix();
+    glScalef(0.5,0.5,0.5);
+    glRotatef(90, 1, 0, 0);
+    glRotatef(100, 0, 1, 0);
+    glTranslatef(20,1.5,-60);
+    glCallList(_displayListSeeSaw);
+    glPopMatrix();
+    
+    //kursi1
+glPushMatrix();
+glTranslatef(0,5,-15); 
+glScalef(50, 50, 50);
+//glBindTexture(GL_TEXTURE_2D, texture[0]);
+kursi();
+glPopMatrix();
+
+
+//kursi2
+glPushMatrix();
+glTranslatef(-50,5,-15); 
+glScalef(5, 5, 5);
+//glBindTexture(GL_TEXTURE_2D, texture[0]);
+kursi();
+glPopMatrix();
     /*
     glPushMatrix();
     glTranslatef(0,0,-16);
@@ -1532,7 +1596,7 @@ int main(int argc, char** argv) {
     glutDisplayFunc(drawScene);
     glutKeyboardFunc(handleKeypress);
     glutReshapeFunc(handleResize);
-    glutTimerFunc(25, update, 0);
+    //glutTimerFunc(25, update, 0);
     glutSpecialFunc(kibor);
     glutIdleFunc(drawScene);
     glutMainLoop();
