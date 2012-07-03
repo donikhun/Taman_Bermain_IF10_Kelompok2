@@ -1272,6 +1272,30 @@ glutSolidSphere(1.6,25,25);
 glPopMatrix();
 glPopMatrix();
 }
+void awan(void){
+glPushMatrix(); 
+glColor3ub(153, 223, 255);
+glutSolidSphere(10, 50, 50);
+glPopMatrix();
+glPushMatrix();
+glTranslatef(10,0,1);
+glutSolidSphere(5, 50, 50);
+glPopMatrix();   
+glPushMatrix();
+glTranslatef(-2,6,-2);
+glutSolidSphere(7, 50, 50);
+glPopMatrix();   
+glPushMatrix();
+glTranslatef(-10,-3,0);
+glutSolidSphere(7, 50, 50);
+glPopMatrix();  
+glPushMatrix();
+glTranslatef(6,-2,2);
+glutSolidSphere(7, 50, 50);
+glPopMatrix();      
+
+
+}
 //Loads a terrain from a heightmap.  The heights of the terrain range from
 //-height / 2 to height / 2.
 
@@ -1541,8 +1565,17 @@ void drawScene() {
     glTranslatef(0.0f, 0.0f, -40.0f);
 
     glRotatef(-70, 1.0f, 0.0f, 0.0f);
-    glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     glScalef(0.4, 0.4, 0.4);
+    glPushMatrix();
+    glTranslatef(0.0, 130.0, 30.0);
+    awan();
+    glPopMatrix();
+    glPushMatrix();
+    glTranslatef(50.0, 130.0, 30.0);
+    awan();
+    glPopMatrix();
+    glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
+    
 
     glEnable(GL_TEXTURE_2D);
 
@@ -1697,6 +1730,8 @@ void drawScene() {
     glTranslatef(50.0, 1.5, 80.0);
     glCallList(_displayListPohon);
     glPopMatrix();
+    
+
     /*
     glPushMatrix();
     glTranslatef(0,0,-16);
@@ -1740,3 +1775,4 @@ int main(int argc, char** argv) {
     glutMainLoop();
     return 0;
 }
+
