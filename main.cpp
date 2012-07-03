@@ -1574,8 +1574,13 @@ void drawScene() {
     glTranslatef(50.0, 130.0, 30.0);
     awan();
     glPopMatrix();
-    glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
     
+glPushMatrix();
+glTranslatef(-100,200,30);  
+glColor3ub(255, 253, 116);
+glutSolidSphere(10, 50, 50);
+glPopMatrix();
+    glRotatef(-_angle, 0.0f, 0.0f, 1.0f);
 
     glEnable(GL_TEXTURE_2D);
 
